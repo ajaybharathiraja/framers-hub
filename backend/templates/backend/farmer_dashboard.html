@@ -1,0 +1,57 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}Farmer Dashboard - UzhavarHub{% endblock %}
+
+{% block content %}
+<div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+    <h2 style="color: white; margin-bottom: 1.5rem;">Farmer Dashboard</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="color: var(--text-muted); font-weight: 500;">Total Income</h4>
+            <p style="font-size: 1.8rem; font-weight: 700; color: var(--primary);">₹{{ total_income }}</p>
+        </div>
+        
+        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="color: var(--text-muted); font-weight: 500;">Total Sales</h4>
+            <p style="font-size: 1.8rem; font-weight: 700; color: white;">{{ total_sales }}</p>
+        </div>
+        
+        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="color: var(--text-muted); font-weight: 500;">Active Products</h4>
+            <p style="font-size: 1.8rem; font-weight: 700; color: white;">{{ active_products }}</p>
+        </div>
+        
+        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="color: var(--text-muted); font-weight: 500;">Inventory Volume</h4>
+            <p style="font-size: 1.8rem; font-weight: 700; color: white;">{{ total_inventory }} kg</p>
+        </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+            <h3 style="color: white; margin-bottom: 1rem;">Income Breakdown</h3>
+            <ul style="list-style: none; color: var(--text);">
+                <li style="padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between;">
+                    <span>Today</span> <strong style="color: var(--primary);">₹{{ daily_income }}</strong>
+                </li>
+                <li style="padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between;">
+                    <span>This Week</span> <strong style="color: var(--primary);">₹{{ weekly_income }}</strong>
+                </li>
+                <li style="padding: 10px 0; display: flex; justify-content: space-between;">
+                    <span>This Month</span> <strong style="color: var(--primary);">₹{{ monthly_income }}</strong>
+                </li>
+            </ul>
+        </div>
+        
+        <div style="background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <h3 style="color: white; margin-bottom: 1rem;">Market Intelligence</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Get AI-powered pricing and crop recommendations.</p>
+            <div style="display: flex; gap: 1rem;">
+                <a href="{% url 'crop_recommendation_view' %}" class="btn" style="width: auto; padding: 0.6rem 1rem;">Crop Rec</a>
+                <a href="{% url 'dynamic_pricing_view' %}" class="btn" style="width: auto; padding: 0.6rem 1rem;">Pricing Engine</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

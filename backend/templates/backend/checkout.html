@@ -1,0 +1,14 @@
+{% extends 'backend/base.html' %}
+{% block title %}Checkout - UzhavarHub{% endblock %}
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 600px;">
+        <h2 style="color: white; margin-bottom: 2rem; text-align: center;">Checkout</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <p style="color: var(--text); margin-bottom: 1.5rem; text-align: center;">Simulating Payment Gateway...</p>
+            <button type="submit" class="btn">Pay & Confirm Order</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

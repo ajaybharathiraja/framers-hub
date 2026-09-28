@@ -1,0 +1,27 @@
+{% extends "backend/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Technology Acceptance Model (TAM) Survey</h2>
+    <p>Please provide your feedback to help us improve the platform.</p>
+    <div class="card p-4">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Perceived Usefulness (1-5)</label>
+                {{ form.perceived_usefulness }}
+                <div class="form-text">How useful do you find the application? (1: Not useful, 5: Very useful)</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Perceived Ease of Use (1-5)</label>
+                {{ form.perceived_ease_of_use }}
+                <div class="form-text">How easy is it to use the application? (1: Very difficult, 5: Very easy)</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Comments</label>
+                {{ form.comments }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

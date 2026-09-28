@@ -1,0 +1,92 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block title %}Customer Dashboard - UzhavarHub{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <h1 style="color: var(--text); margin-bottom: 0.5rem;">Welcome back, {{ user.username }}!</h1>
+    <p style="color: var(--text-muted);">Here's an overview of your activity on UzhavarHub.</p>
+</div>
+
+<!-- Stats Row -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+        <h3 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Total Orders</h3>
+        <p style="font-size: 1.8rem; font-weight: 700; color: var(--text);">{{ total_orders }}</p>
+    </div>
+    
+    <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+        <h3 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Total Spent</h3>
+        <p style="font-size: 1.8rem; font-weight: 700; color: var(--primary);">₹{{ total_spent }}</p>
+    </div>
+
+    <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+        <h3 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Items in Cart</h3>
+        <p style="font-size: 1.8rem; font-weight: 700; color: var(--text);">{{ cart_items_count }}</p>
+        <a href="{% url 'cart_view' %}" style="color: var(--primary); font-size: 0.8rem; text-decoration: none; display: block; margin-top: 0.5rem;">View Cart &rarr;</a>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+    <!-- Recent Orders -->
+    <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="color: white; font-size: 1.2rem;">Recent Orders</h2>
+            <a href="{% url 'order_history' %}" style="color: var(--primary); text-decoration: none; font-size: 0.9rem;">View All</a>
+        </div>
+        
+        {% if recent_orders %}
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                {% for order in recent_orders %}
+                <li style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border);">
+                    <div>
+                        <p style="color: var(--text); font-weight: 500; margin-bottom: 0.2rem;">Order #{{ order.id }}</p>
+                        <p style="color: var(--text-muted); font-size: 0.8rem;">{{ order.created_at|date:"M d, Y" }}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="color: var(--text); font-weight: 700; margin-bottom: 0.2rem;">₹{{ order.total_amount }}</p>
+                        <span style="font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(46, 160, 67, 0.1); color: var(--primary);">{{ order.status }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div style="text-align: center; padding: 2rem 0; color: var(--text-muted);">
+                <p>You haven't placed any orders yet.</p>
+                <a href="{% url 'marketplace' %}" class="btn" style="display: inline-block; padding: 0.5rem 1rem; margin-top: 1rem;">Browse Marketplace</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Quick Actions & Featured -->
+    <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="color: white; font-size: 1.2rem;">Featured Fresh Produce</h2>
+            <a href="{% url 'marketplace' %}" style="color: var(--primary); text-decoration: none; font-size: 0.9rem;">View Marketplace</a>
+        </div>
+        
+        {% if featured_products %}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                {% for listing in featured_products %}
+                <div style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.02);">
+                    {% if listing.product.images.first %}
+                        <img src="{{ listing.product.images.first.image.url }}" alt="{{ listing.product.commodity }}" style="width: 100%; height: 100px; object-fit: cover;">
+                    {% else %}
+                        <div style="width: 100%; height: 100px; background: var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.8rem;">
+                            No Image
+                        </div>
+                    {% endif %}
+                    <div style="padding: 0.8rem;">
+                        <h4 style="color: var(--text); font-size: 0.9rem; margin-bottom: 0.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ listing.product.commodity }}</h4>
+                        <p style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">₹{{ listing.selling_price_per_kg }}/kg</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="color: var(--text-muted); text-align: center; padding: 2rem 0;">No products available right now.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'backend/base.html' %}
+{% block title %}Shopping Cart - UzhavarHub{% endblock %}
+{% block content %}
+<div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+    <h2 style="color: white; margin-bottom: 2rem;">Your Cart</h2>
+    {% if items %}
+    <table style="width: 100%; text-align: left; border-collapse: collapse; color: var(--text);">
+        <tr style="border-bottom: 1px solid var(--border);">
+            <th style="padding: 1rem;">Product</th>
+            <th style="padding: 1rem;">Price</th>
+            <th style="padding: 1rem;">Quantity</th>
+            <th style="padding: 1rem;">Total</th>
+            <th style="padding: 1rem;">Actions</th>
+        </tr>
+        {% for item in items %}
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 1rem;">{{ item.listing.product.commodity }}</td>
+            <td style="padding: 1rem;">₹{{ item.listing.selling_price_per_kg }}</td>
+            <td style="padding: 1rem;">
+                <form action="{% url 'update_cart_item' item.id %}" method="POST" style="display: flex; gap: 5px; align-items: center;">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity|floatformat:0 }}" min="1" max="{{ item.listing.product.inventory.available_quantity|floatformat:0 }}" style="width: 70px; padding: 0.3rem; background: var(--bg-color); border: 1px solid var(--border); color: white; border-radius: 4px;">
+                    <button type="submit" class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; width: auto;">Update</button>
+                </form>
+            </td>
+            <td style="padding: 1rem;">₹{{ item.subtotal }}</td>
+            <td style="padding: 1rem;">
+                <form action="{% url 'remove_cart_item' item.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn" style="background: var(--danger); border-color: var(--danger); padding: 0.3rem 0.6rem; font-size: 0.8rem; width: auto;">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div style="margin-top: 2rem; text-align: right;">
+        <a href="{% url 'checkout' %}" class="btn" style="display: inline-block; width: auto; padding: 1rem 2rem;">Proceed to Checkout</a>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted);">Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

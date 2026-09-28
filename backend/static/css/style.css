@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-color: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #21262d;
+    --primary: #2ea043;
+    --primary-hover: #238636;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --danger: #da3633;
+}
+
+[data-theme="light"] {
+    --bg-color: #ffffff;
+    --surface: #f6f8fa;
+    --surface-hover: #eaeef2;
+    --primary: #2ea043;
+    --primary-hover: #238636;
+    --text: #24292f;
+    --text-muted: #57606a;
+    --border: #d0d7de;
+    --accent: #0969da;
+    --danger: #cf222e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: #79c0ff;
+    text-decoration: underline;
+}
+
+/* Glassmorphism Navigation */
+nav {
+    background: rgba(22, 27, 34, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-brand span {
+    color: var(--primary);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.nav-links a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    color: white;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover {
+    background: var(--surface-hover);
+    border-color: var(--text-muted);
+}
+
+.nav-btn.primary {
+    background: var(--primary);
+    border-color: rgba(240,246,252,0.1);
+}
+
+.nav-btn.primary:hover {
+    background: var(--primary-hover);
+}
+
+/* Layout */
+.container {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.sidebar .nav-brand {
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.sidebar-link svg {
+    stroke: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+    background: var(--surface-hover);
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar-link:hover svg, .sidebar-link.active svg {
+    stroke: var(--primary);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+/* Collapsed Sidebar State */
+.sidebar {
+    transition: width 0.3s ease, padding 0.3s ease;
+    overflow-x: hidden;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+    padding: 1.5rem 0.5rem;
+}
+
+.sidebar.collapsed .nav-brand {
+    justify-content: center;
+}
+
+.sidebar.collapsed .nav-brand-text {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-link {
+    justify-content: center;
+    padding: 0.75rem 0;
+    font-size: 0;
+}
+
+.sidebar.collapsed .sidebar-link svg {
+    margin: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 2rem 5%;
+    overflow-y: auto;
+    background: var(--bg-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Auth Cards */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.auth-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h2 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg-color);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: white;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+}
+
+.btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--primary);
+    color: white;
+    border: 1px solid rgba(240,246,252,0.1);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: var(--primary-hover);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}

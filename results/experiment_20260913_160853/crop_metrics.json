@@ -1,0 +1,20 @@
+{
+    "model_name": "crop_rf",
+    "version": "v1.0",
+    "training_timestamp": "2026-09-13T16:08:54.337246",
+    "features": [
+        "N",
+        "P",
+        "K",
+        "temperature",
+        "humidity",
+        "ph",
+        "rainfall"
+    ],
+    "metrics": {
+        "accuracy": 0.9954545454545455,
+        "precision": 0.9956709956709956,
+        "recall": 0.9954545454545455,
+        "f1_score": 0.9954517027687759
+    }
+}

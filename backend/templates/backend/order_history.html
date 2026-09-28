@@ -1,0 +1,26 @@
+{% extends 'backend/base.html' %}
+{% block title %}Orders - UzhavarHub{% endblock %}
+{% block content %}
+<div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+    <h2 style="color: white; margin-bottom: 2rem;">Orders</h2>
+    {% if orders %}
+    <div style="display: grid; gap: 1.5rem;">
+        {% for order in orders %}
+        <div style="background: var(--bg-color); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+            <h3 style="color: white; margin-bottom: 1rem;">Order #{{ order.id }}</h3>
+            <p style="color: var(--text-muted);">Date: {{ order.created_at|date }}</p>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Total: <strong style="color: var(--primary);">₹{{ order.total_amount }}</strong></p>
+            <p style="color: white;">Items:</p>
+            <ul style="color: var(--text-muted); margin-left: 1.5rem; margin-top: 0.5rem;">
+                {% for item in order.items.all %}
+                <li>{{ item.product.commodity }} - {{ item.quantity }}kg</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted);">No orders found.</p>
+    {% endif %}
+</div>
+{% endblock %}

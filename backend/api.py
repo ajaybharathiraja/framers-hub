@@ -21,7 +21,10 @@ def get_market_data():
     return MARKET_DATA
 
 from ai_services.dynamic_pricing.predict import load_pricing_model, predict_price
-from ai_services.dynamic_pricing.explain import generate_pricing_explanation
+try:
+    from ai_services.dynamic_pricing.explain import generate_pricing_explanation
+except ImportError:
+    generate_pricing_explanation = None
 
 # Load model globally to avoid loading on every request
 PRICING_MODEL, PRICING_METADATA = load_pricing_model()
@@ -124,7 +127,10 @@ def market_intelligence_api(request):
     return JsonResponse({'data': intelligence})
 
 from ai_services.crop_recommendation.predict import load_crop_model, predict_crop
-from ai_services.crop_recommendation.explain import generate_crop_explanation
+try:
+    from ai_services.crop_recommendation.explain import generate_crop_explanation
+except ImportError:
+    generate_crop_explanation = None
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json

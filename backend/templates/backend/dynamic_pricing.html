@@ -120,7 +120,7 @@ async function getPricing() {
                 document.getElementById('predicted-price').innerText = `₹${data.data.predicted_price.toFixed(2)} / kg`;
             } else {
                 document.getElementById('predicted-price').style.color = 'var(--danger)';
-                document.getElementById('predicted-price').innerText = "Insufficient data";
+                document.getElementById('predicted-price').innerText = data.data.ai_error ? data.data.ai_error : "Insufficient data";
             }
             document.getElementById('historical-avg').innerText = `Historical Avg: ₹${data.data.historical_avg.toFixed(2)} / kg`;
             

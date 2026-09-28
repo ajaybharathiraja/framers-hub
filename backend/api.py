@@ -117,12 +117,22 @@ def market_intelligence_api(request):
         except Exception as e:
             intelligence['predicted_price'] = None
             intelligence['explanation'] = None
+            intelligence['ai_error'] = str(e)
             
         intelligence['ai_metadata'] = {
-            'model_version': PRICING_METADATA['version'],
-            'model_name': PRICING_METADATA['model_name'],
+            'model_version': PRICING_METADATA.get('version', 'unknown') if PRICING_METADATA else 'unknown',
+            'model_name': PRICING_METADATA.get('model_name', 'unknown') if PRICING_METADATA else 'unknown',
             'note': 'AI-generated estimate based on historical market data.'
         }
+    else:
+        intelligence['predicted_price'] = None
+        intelligence['explanation'] = None
+        intelligence['ai_error'] = "Pricing model or metadata not loaded."
+        
+        intelligence['ai_metadata'] = {
+            'note': 'AI-generated estimate based on historical market data.'
+        }
+
         
     return JsonResponse({'data': intelligence})
 

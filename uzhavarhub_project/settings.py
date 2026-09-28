@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-pfn(e8)hkd62*u7vuq$i=%krhdyhkvb&g*5z=)q8s^9=!v@#=u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.vercel.app']
 
 # Security settings (Enable these in production)
 SECURE_BROWSER_XSS_FILTER = True

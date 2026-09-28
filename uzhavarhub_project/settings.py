@@ -79,12 +79,30 @@ WSGI_APPLICATION = 'uzhavarhub_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+import os
+import shutil
+
+if os.environ.get('VERCEL') == '1':
+    tmp_db_path = '/tmp/db.sqlite3'
+    if not os.path.exists(tmp_db_path):
+        try:
+            shutil.copy2(BASE_DIR / 'db.sqlite3', tmp_db_path)
+        except Exception:
+            pass
+            
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': tmp_db_path,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

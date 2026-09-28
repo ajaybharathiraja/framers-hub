@@ -5,7 +5,11 @@
             "src": "uzhavarhub_project/wsgi.py",
             "use": "@vercel/python",
             "config": {
-                "runtime": "python3.9"
+                "runtime": "python3.9",
+                "includeFiles": [
+                    "ai_services/**/models/**",
+                    "data/raw/**"
+                ]
             }
         }
     ],

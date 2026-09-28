@@ -5,9 +5,10 @@ import pandas as pd
 import numpy as np
 
 def load_crop_model():
-    model_path = 'ai_services/crop_recommendation/models/crop_rf_v1.0.joblib'
-    le_path = 'ai_services/crop_recommendation/models/label_encoder.joblib'
-    meta_path = 'ai_services/crop_recommendation/models/metadata.json'
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    model_path = os.path.join(base_dir, 'ai_services/crop_recommendation/models/crop_rf_v1.0.joblib')
+    le_path = os.path.join(base_dir, 'ai_services/crop_recommendation/models/label_encoder.joblib')
+    meta_path = os.path.join(base_dir, 'ai_services/crop_recommendation/models/metadata.json')
     
     if not os.path.exists(model_path) or not os.path.exists(meta_path) or not os.path.exists(le_path):
         return None, None, None

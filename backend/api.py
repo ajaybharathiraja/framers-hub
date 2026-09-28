@@ -179,7 +179,13 @@ def crop_recommendation_api(request):
     }
     
     results = predict_crop(features_dict, CROP_MODEL, CROP_LE, CROP_METADATA)
-    explanation = generate_crop_explanation(CROP_MODEL, features_dict, CROP_METADATA)
+    if generate_crop_explanation:
+        try:
+            explanation = generate_crop_explanation(CROP_MODEL, features_dict, CROP_METADATA)
+        except Exception:
+            explanation = None
+    else:
+        explanation = None
     
     from .models import ResearchEvent
     if request.user.is_authenticated:

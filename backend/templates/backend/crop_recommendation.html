@@ -157,20 +157,24 @@ async function getRecommendation() {
             document.getElementById('result-content').style.display = 'block';
             document.getElementById('predicted-crop').innerText = data.recommended_crop;
             
-            let shapHtml = '<ul style="list-style: none; padding: 0; color: var(--text);">';
-            for (const item of data.explanation) {
-                const feature = item.feature;
-                const impact = item.contribution;
-                const isPositive = impact > 0;
-                const color = isPositive ? 'var(--primary)' : 'var(--danger)';
-                const sign = isPositive ? '+' : '';
-                shapHtml += `<li style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                    <span>${feature.toUpperCase()}</span>
-                    <span style="color: ${color}; font-weight: bold;">${sign}${impact.toFixed(3)}</span>
-                </li>`;
+            if (data.explanation) {
+                let shapHtml = '<ul style="list-style: none; padding: 0; color: var(--text);">';
+                for (const item of data.explanation) {
+                    const feature = item.feature;
+                    const impact = item.contribution;
+                    const isPositive = impact > 0;
+                    const color = isPositive ? 'var(--primary)' : 'var(--danger)';
+                    const sign = isPositive ? '+' : '';
+                    shapHtml += `<li style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>${feature.toUpperCase()}</span>
+                        <span style="color: ${color}; font-weight: bold;">${sign}${impact.toFixed(3)}</span>
+                    </li>`;
+                }
+                shapHtml += '</ul>';
+                document.getElementById('shap-explanations').innerHTML = shapHtml;
+            } else {
+                document.getElementById('shap-explanations').innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Detailed explanation not available (SHAP library disabled).</p>';
             }
-            shapHtml += '</ul>';
-            document.getElementById('shap-explanations').innerHTML = shapHtml;
         } else {
             alert('Error: ' + (data.error || 'Unknown error'));
         }

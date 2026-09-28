@@ -156,3 +156,5 @@ MAILERS = {
 AUTH_USER_MODEL = 'backend.User'
 
 LOGIN_URL = 'login'
+
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']

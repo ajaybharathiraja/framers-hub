@@ -1,0 +1,57 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}Marketplace - UzhavarHub{% endblock %}
+
+{% block content %}
+<div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2 style="color: white;">Fresh Produce Marketplace</h2>
+        
+        <form method="GET" action="{% url 'marketplace' %}" style="display: flex; gap: 10px;">
+            <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search crops..." class="form-control" style="width: 250px;">
+            <button type="submit" class="btn" style="width: auto;">Search</button>
+        </form>
+    </div>
+    
+    {% if categorized_listings %}
+        {% for category, items in categorized_listings.items %}
+        <div style="margin-bottom: 3rem;">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">{{ category }}</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                {% for listing in items %}
+                <div style="background: var(--bg-color); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform 0.2s;">
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <h3 style="color: white; font-size: 1.2rem;">{{ listing.product.commodity }}</h3>
+                            <span style="background: rgba(46, 160, 67, 0.2); color: var(--primary); padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">₹{{ listing.selling_price_per_kg }}/kg</span>
+                        </div>
+                        
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                            <strong>Farmer:</strong> {{ listing.product.farmer.user.get_full_name|default:listing.product.farmer.user.username }}
+                        </p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                            <strong>Location:</strong> {{ listing.product.location }}
+                        </p>
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <a href="{% url 'product_details' listing.id %}" class="btn" style="background: var(--surface-hover); border-color: var(--border); color: white; text-align: center; flex: 1; padding: 0.6rem;">View Details</a>
+                            
+                            <form action="{% url 'add_to_cart' listing.id %}" method="POST" style="flex: 1;">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn" style="padding: 0.6rem;">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <div style="text-align: center; padding: 3rem 1rem; background: var(--bg-color); border-radius: 8px; border: 1px dashed var(--border);">
+        <p style="color: var(--text-muted); font-size: 1.1rem;">No crops are currently available in the marketplace.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

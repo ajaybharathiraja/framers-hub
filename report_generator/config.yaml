@@ -1,0 +1,15 @@
+project_name: "Sample Accounting Report"
+report_period: "Q1 2026"
+data_type: "accounting" # can be 'accounting', 'sales', 'hr', 'general'
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  output: "output"
+  logs: "logs"
+required_columns:
+  accounting:
+    - "Date"
+    - "Account"
+    - "Description"
+    - "Debit"
+    - "Credit"

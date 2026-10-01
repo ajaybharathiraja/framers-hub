@@ -1,0 +1,165 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}Dynamic Pricing Engine - UzhavarHub{% endblock %}
+
+{% block content %}
+<div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+    <h2 style="color: white; margin-bottom: 1rem;">Dynamic Pricing Engine</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Get an AI-predicted fair market price based on historical data and current market trends.</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        
+        <!-- Input Form -->
+        <div style="background: var(--bg-color); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+            <form id="pricing-form">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>State</label>
+                        <input type="text" id="state" class="form-control" value="Tamil Nadu" required>
+                    </div>
+                    <div class="form-group">
+                        <label>District</label>
+                        <input type="text" id="district" class="form-control" value="Vellore" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Market</label>
+                        <input type="text" id="market" class="form-control" value="Vellore" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Commodity</label>
+                        <input type="text" id="commodity" class="form-control" value="Tomato" required>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="button" onclick="getPricing()" class="btn">Predict Price</button>
+                    <button type="button" onclick="randomPricingSample()" class="btn" style="background: var(--surface); border: 1px solid var(--border); color: var(--text);">Auto-fill from Dataset</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Results Panel -->
+        <div id="pricing-results-panel" style="background: rgba(46, 160, 67, 0.05); padding: 1.5rem; border: 1px solid rgba(46, 160, 67, 0.2); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <div id="pricing-loading" style="display: none; color: var(--text-muted);">Analyzing market data...</div>
+            
+            <div id="pricing-result-content" style="display: none; width: 100%;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;">Predicted Fair Price</h3>
+                <h1 id="predicted-price" style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">₹0.00 / kg</h1>
+                <p id="historical-avg" style="color: var(--text-muted); margin-bottom: 1.5rem;">Historical Avg: ₹0.00 / kg</p>
+                
+                <h4 id="pricing-shap-header" style="color: white; margin-bottom: 1rem; text-align: left; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; display: none;">Price Drivers (SHAP)</h4>
+                
+                <div id="pricing-shap-explanations" style="text-align: left; font-size: 0.9rem;">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+            
+            <div id="pricing-default-msg" style="color: var(--text-muted);">
+                Submit your query to see the AI prediction.
+            </div>
+        </div>
+        
+    </div>
+
+    {% if market_samples %}
+    <div style="margin-top: 2rem; background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+        <h4 style="color: white; margin-bottom: 1rem;">Dataset Samples (For Visualization)</h4>
+        <div style="overflow-x: auto;">
+            <table class="table" style="width: 100%; text-align: left; color: var(--text-muted); font-size: 0.9rem; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <th style="padding: 0.5rem;">State</th><th style="padding: 0.5rem;">District</th><th style="padding: 0.5rem;">Market</th><th style="padding: 0.5rem;">Commodity</th><th style="padding: 0.5rem;">Modal Price</th><th style="padding: 0.5rem;">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in market_samples %}
+                    <tr style="border-bottom: 1px solid var(--border); cursor: pointer;" onclick="fillPricing('{{ row.state|escapejs }}', '{{ row.district|escapejs }}', '{{ row.market|escapejs }}', '{{ row.commodity|escapejs }}')">
+                        <td style="padding: 0.5rem;">{{ row.state }}</td><td style="padding: 0.5rem;">{{ row.district }}</td><td style="padding: 0.5rem;">{{ row.market }}</td><td style="padding: 0.5rem;">{{ row.commodity }}</td>
+                        <td style="padding: 0.5rem; color: var(--primary); font-weight: bold;">₹{{ row.modal_price }}</td>
+                        <td style="padding: 0.5rem;">{{ row.date|date:"Y-m-d" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script id="marketSamplesData" type="application/json">
+    {{ market_samples_json|safe|default:"[]" }}
+</script>
+<script>
+const marketSamplesJson = JSON.parse(document.getElementById('marketSamplesData').textContent || '[]');
+
+function randomPricingSample() {
+    if (marketSamplesJson.length === 0) return;
+    const row = marketSamplesJson[Math.floor(Math.random() * marketSamplesJson.length)];
+    fillPricing(row.state, row.district, row.market, row.commodity);
+}
+
+async function getPricing() {
+    const state = document.getElementById('state').value;
+    const district = document.getElementById('district').value;
+    const market = document.getElementById('market').value;
+    const commodity = document.getElementById('commodity').value;
+    
+    document.getElementById('pricing-default-msg').style.display = 'none';
+    document.getElementById('pricing-result-content').style.display = 'none';
+    document.getElementById('pricing-loading').style.display = 'block';
+    
+    try {
+        const response = await fetch(`/api/market-intelligence/?state=${encodeURIComponent(state)}&district=${encodeURIComponent(district)}&market=${encodeURIComponent(market)}&commodity=${encodeURIComponent(commodity)}`);
+        const data = await response.json();
+        
+        document.getElementById('pricing-loading').style.display = 'none';
+        
+        if (response.ok && data.data) {
+            document.getElementById('pricing-result-content').style.display = 'block';
+            if (data.data.predicted_price !== null) {
+                document.getElementById('predicted-price').style.color = 'var(--primary)';
+                document.getElementById('predicted-price').innerText = `₹${data.data.predicted_price.toFixed(2)} / kg`;
+            } else {
+                document.getElementById('predicted-price').style.color = 'var(--danger)';
+                document.getElementById('predicted-price').innerText = "Insufficient data";
+            }
+            document.getElementById('historical-avg').innerText = `Historical Avg: ₹${data.data.historical_avg.toFixed(2)} / kg`;
+            
+            let shapHtml = '';
+            if (data.data.explanation) {
+                document.getElementById('pricing-shap-header').style.display = 'block';
+                shapHtml += '<ul style="list-style: none; padding: 0; color: var(--text);">';
+                for (const item of data.data.explanation.contributions) {
+                    const feature = item.feature;
+                    const impact = item.contribution;
+                    const isPositive = impact > 0;
+                    const color = isPositive ? 'var(--primary)' : 'var(--danger)';
+                    const sign = isPositive ? '+' : '';
+                    shapHtml += `<li style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>${feature}</span>
+                        <span style="color: ${color}; font-weight: bold;">${sign}${impact.toFixed(3)}</span>
+                    </li>`;
+                }
+                shapHtml += '</ul>';
+            } else {
+                document.getElementById('pricing-shap-header').style.display = 'none';
+            }
+            document.getElementById('pricing-shap-explanations').innerHTML = shapHtml;
+        } else {
+            alert('Error: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        document.getElementById('pricing-loading').style.display = 'none';
+        alert('Failed to reach AI service.');
+    }
+}
+
+function fillPricing(state, district, market, commodity) {
+    document.getElementById('state').value = state;
+    document.getElementById('district').value = district;
+    document.getElementById('market').value = market;
+    document.getElementById('commodity').value = commodity;
+    getPricing();
+    document.getElementById('pricing-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+{% endblock %}

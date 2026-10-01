@@ -1,0 +1,23 @@
+{% extends 'backend/base.html' %}
+{% block title %}My Products - UzhavarHub{% endblock %}
+{% block content %}
+<div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2 style="color: white;">My Products</h2>
+        <a href="{% url 'farmer_add_product' %}" class="btn" style="width: auto;">Add New Product</a>
+    </div>
+    {% if products %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+        {% for product in products %}
+        <div style="background: var(--bg-color); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+            <h3 style="color: white; margin-bottom: 0.5rem;">{{ product.commodity }}</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Location: {{ product.location }}</p>
+            <p style="color: var(--text-muted);">Status: {% if product.listing and product.listing.is_active %}Active{% else %}Inactive{% endif %}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted);">You have no products listed.</p>
+    {% endif %}
+</div>
+{% endblock %}

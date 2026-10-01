@@ -1,0 +1,100 @@
+{% extends 'backend/base.html' %}
+{% block title %}Set Pricing - UzhavarHub{% endblock %}
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 600px;">
+        <div class="auth-header">
+            <h2>Set Your Price</h2>
+            <p>Review market insights and set the final price for {{ listing.product.commodity }}</p>
+        </div>
+        
+        <!-- Results Panel for AI Prediction -->
+        <div id="pricing-results-panel" style="background: rgba(46, 160, 67, 0.05); padding: 1.5rem; border: 1px solid rgba(46, 160, 67, 0.2); border-radius: 8px; text-align: center; margin-bottom: 2rem;">
+            <div id="pricing-loading" style="color: var(--text-muted);">Analyzing market data for {{ listing.product.commodity }}...</div>
+            
+            <div id="pricing-result-content" style="display: none;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;">AI Predicted Fair Price</h3>
+                <h1 id="predicted-price" style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">₹0.00 / kg</h1>
+                <p id="historical-avg" style="color: var(--text-muted); margin-bottom: 1.5rem;">Historical Avg: ₹0.00 / kg</p>
+                
+                <h4 id="pricing-shap-header" style="color: white; margin-bottom: 1rem; text-align: left; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; display: none;">Price Drivers</h4>
+                <div id="pricing-shap-explanations" style="text-align: left; font-size: 0.9rem;"></div>
+            </div>
+            
+            <div id="pricing-error-msg" style="display: none; color: var(--danger);"></div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <h4 style="color: white; margin: 1.5rem 0 1rem;">Final Listing Pricing</h4>
+            {{ listing_form.as_p }}
+            <button type="submit" class="btn" style="margin-top: 2rem;">Publish Listing</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        if(el.type !== 'checkbox' && el.type !== 'radio') {
+            el.classList.add('form-control');
+        }
+    });
+
+    // Auto-fetch the prediction on load
+    document.addEventListener("DOMContentLoaded", async function() {
+        const state = "{{ listing.product.farmer.state|escapejs }}";
+        const district = "{{ listing.product.farmer.district|escapejs }}";
+        const market = "{{ listing.product.location|escapejs }}";
+        const commodity = "{{ listing.product.commodity|escapejs }}";
+        const variety = "{{ listing.product.variety|escapejs }}";
+        const grade = "{{ listing.product.grade|escapejs }}";
+        const listingId = "{{ listing.id }}";
+        
+        try {
+            let url = `/api/market-intelligence/?state=${encodeURIComponent(state)}&district=${encodeURIComponent(district)}&market=${encodeURIComponent(market)}&commodity=${encodeURIComponent(commodity)}&listing_id=${listingId}`;
+            if (variety) url += `&variety=${encodeURIComponent(variety)}`;
+            if (grade) url += `&grade=${encodeURIComponent(grade)}`;
+            
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            document.getElementById('pricing-loading').style.display = 'none';
+            
+            if (response.ok && data.data) {
+                document.getElementById('pricing-result-content').style.display = 'block';
+                
+                if (data.data.predicted_price !== null) {
+                    document.getElementById('predicted-price').innerText = `₹${data.data.predicted_price.toFixed(2)} / kg`;
+                } else {
+                    document.getElementById('predicted-price').style.color = 'var(--danger)';
+                    document.getElementById('predicted-price').innerText = "Insufficient data";
+                }
+                document.getElementById('historical-avg').innerText = `Historical Avg: ₹${data.data.historical_avg.toFixed(2)} / kg`;
+                
+                if (data.data.explanation) {
+                    document.getElementById('pricing-shap-header').style.display = 'block';
+                    let shapHtml = '<ul style="list-style: none; padding: 0; color: var(--text);">';
+                    for (const item of data.data.explanation.contributions) {
+                        const isPositive = item.contribution > 0;
+                        const color = isPositive ? 'var(--primary)' : 'var(--danger)';
+                        const sign = isPositive ? '+' : '';
+                        shapHtml += `<li style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>${item.feature}</span>
+                            <span style="color: ${color}; font-weight: bold;">${sign}${item.contribution.toFixed(3)}</span>
+                        </li>`;
+                    }
+                    shapHtml += '</ul>';
+                    document.getElementById('pricing-shap-explanations').innerHTML = shapHtml;
+                }
+            } else {
+                document.getElementById('pricing-error-msg').style.display = 'block';
+                document.getElementById('pricing-error-msg').innerText = 'AI Prediction: ' + (data.error || 'Unknown error');
+            }
+        } catch (error) {
+            document.getElementById('pricing-loading').style.display = 'none';
+            document.getElementById('pricing-error-msg').style.display = 'block';
+            document.getElementById('pricing-error-msg').innerText = 'Failed to load AI prediction.';
+        }
+    });
+</script>
+{% endblock %}

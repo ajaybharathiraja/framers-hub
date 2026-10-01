@@ -1,0 +1,9 @@
+Date,Account,Description,Debit,Credit
+2026-01-05,Cash,Initial Investment,10000.0,0.0
+2026-01-05,Owner Equity,Initial Investment,0.0,10000.0
+2026-01-10,Rent Expense,January Rent,1000.0,0.0
+2026-01-10,Cash,January Rent,0.0,1000.0
+2026-02-15,Revenue,Consulting Services,0.0,2500.0
+2026-02-15,Accounts Receivable,Consulting Services,2500.0,0.0
+2026-03-20,Cash,Payment from Client,2500.0,0.0
+2026-03-20,Accounts Receivable,Payment from Client,0.0,2500.0

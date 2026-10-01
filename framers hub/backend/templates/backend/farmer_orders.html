@@ -1,0 +1,53 @@
+{% extends 'backend/base.html' %}
+
+{% block title %}Farmer Orders - UzhavarHub{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h2 style="color: white; margin-bottom: 0.5rem;">Farmer Orders</h2>
+    <p style="color: var(--text-muted);">View and manage orders for your products</p>
+</div>
+
+<div class="orders-list" style="margin-top: 2rem;">
+    {% if orders %}
+        <div style="display: grid; gap: 1.5rem;">
+            {% for order in orders %}
+                <div class="order-card" style="background: var(--surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: white; margin-bottom: 0.5rem;">Order #{{ order.id }}</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Placed on {{ order.created_at|date:"M d, Y" }}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 4px; background: rgba(88, 166, 255, 0.1); color: var(--accent); font-weight: 500; font-size: 0.9rem;">
+                                {{ order.get_status_display }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="order-items">
+                        <h4 style="color: var(--text); margin-bottom: 1rem;">Items in this order:</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            {% for item in order.items.all %}
+                                <!-- Only show items that belong to THIS farmer -->
+                                {% if item.listing.product.farmer == user.farmer_profile %}
+                                <li style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <span style="color: white;">{{ item.quantity }}kg × {{ item.listing.product.commodity }}</span>
+                                    <span>₹{{ item.price_at_sale }} /kg</span>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 3rem; background: var(--surface); border-radius: 8px; border: 1px solid var(--border);">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1rem;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <h3 style="color: white; margin-bottom: 0.5rem;">No Orders Yet</h3>
+            <p style="color: var(--text-muted);">You haven't received any orders for your products.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

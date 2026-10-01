@@ -1,0 +1,31 @@
+{
+    "model_name": "Random Forest",
+    "version": "v1.0",
+    "training_timestamp": "2026-09-22T07:35:28.629063",
+    "features": [
+        "year",
+        "month",
+        "week",
+        "day_of_week",
+        "month_sin",
+        "month_cos",
+        "day_sin",
+        "day_cos",
+        "lag_1",
+        "lag_7",
+        "lag_30",
+        "rolling_mean_7",
+        "rolling_mean_30",
+        "rolling_std_7"
+    ],
+    "metrics": {
+        "mae": 3.875673472999636,
+        "rmse": 13.698800299497313,
+        "r2": 0.9629174803971559
+    },
+    "baseline_metrics": {
+        "mae": 3.5018481157687615,
+        "rmse": 14.642661728463478,
+        "r2": 0.957631389158736
+    }
+}

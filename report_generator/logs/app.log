@@ -1,0 +1,7 @@
+2026-10-01 22:00:04,509 - INFO - Starting report generation process...
+2026-10-01 22:00:04,569 - INFO - Successfully loaded and validated sample_accounting_data.csv
+2026-10-01 22:00:04,571 - INFO - Processing data as type: accounting
+2026-10-01 22:00:04,574 - INFO - Total Debits: 16000.0, Total Credits: 16000.0
+2026-10-01 22:00:05,988 - INFO - Excel report saved to output\report.xlsx
+2026-10-01 22:00:07,474 - INFO - PDF report saved to output\report.pdf
+2026-10-01 22:00:07,475 - INFO - Report generation completed successfully!

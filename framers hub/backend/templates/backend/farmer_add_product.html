@@ -1,0 +1,28 @@
+{% extends 'backend/base.html' %}
+{% block title %}Add Product - UzhavarHub{% endblock %}
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 600px;">
+        <div class="auth-header">
+            <h2>Add New Product</h2>
+            <p>List a new crop on the marketplace</p>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <h4 style="color: white; margin: 1.5rem 0 1rem;">Product Details</h4>
+            {{ product_form.as_p }}
+            <!-- Listing Pricing moved to step 2 -->
+            <h4 style="color: white; margin: 1.5rem 0 1rem;">Inventory</h4>
+            {{ inventory_form.as_p }}
+            <button type="submit" class="btn" style="margin-top: 2rem;">Add Product</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        if(el.type !== 'checkbox' && el.type !== 'radio') {
+            el.classList.add('form-control');
+        }
+    });
+</script>
+{% endblock %}

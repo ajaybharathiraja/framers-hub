@@ -1,0 +1,30 @@
+1. Activate the Virtual Environment First, activate the Python virtual environment. Since you are on Windows, you can do this from the project root (a:\framers hub):
+
+powershell
+  
+venv\Scripts\activate
+
+
+2. Install Dependencies Ensure all the required packages are installed:
+
+powershell
+
+pip install django psycopg2-binary pandas numpy scikit-learn shap joblib
+
+(Note: there's also a requirements.txt file in the project, so you could also run pip install -r requirements.txt)
+
+3. Database Configuration This project requires PostgreSQL. Make sure your PostgreSQL server is running and that your database credentials are correctly updated in uzhavarhub_project/settings.py. (Note: The project currently seems to have a db.sqlite3 file, so it might be partially configured for SQLite as well, but the README specifically mentions PostgreSQL).
+
+4. Setup Data and Initialize Models Ensure you have downloaded the datasets to data/raw/ (Kaggle Crop Recommendation and Combined Market Prices). Then, apply the migrations and run the experiments:
+
+powershell
+
+python manage.py makemigrations backend
+python manage.py migrate
+python run_all_experiments.py
+
+5. Start the Server Finally, start the Django development server:
+
+powershell
+
+python manage.py runserver

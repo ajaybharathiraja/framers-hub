@@ -146,10 +146,10 @@ def generate_all_exports():
         def esc(v):
             if v is None:
                 return "NULL"
-            if isinstance(v, (int, float, Decimal)):
-                return str(v)
             if isinstance(v, bool):
                 return "1" if v else "0"
+            if isinstance(v, (int, float, Decimal)):
+                return str(v)
             if isinstance(v, (datetime, date)):
                 return f"'{v.isoformat()}'"
             if isinstance(v, dict):

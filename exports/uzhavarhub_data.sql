@@ -1,6 +1,6 @@
 -- =====================================================================
 -- UzhavarHub Complete Database Export
--- Generated: 2026-10-27 21:03:24
+-- Generated: 2026-10-27 21:13:04
 -- Database: SQLite / PostgreSQL ANSI Compatible
 -- =====================================================================
 
@@ -18,21 +18,21 @@ CREATE TABLE `backend_user` (
 );
 
 -- Dumping data for `backend_user` (15 records)
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (3, 'test_farmer', 'farmer@test.com', 'farmer', True, '2026-09-13T10:49:52.274405+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (4, 'test_customer', 'customer@test.com', 'customer', True, '2026-09-13T10:49:52.941170+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (51, 'farmer_ariyaluruzhavar_sandhai_280', 'farmer_ariyaluruzhavar_sandhai_280@example.com', 'farmer', True, '2026-10-27T14:29:53.573456+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (52, 'farmer_ariyaluruzhavar_sandhai_559', 'farmer_ariyaluruzhavar_sandhai_559@example.com', 'farmer', True, '2026-10-27T14:29:54.313310+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (53, 'farmer_ariyaluruzhavar_sandhai_253', 'farmer_ariyaluruzhavar_sandhai_253@example.com', 'farmer', True, '2026-10-27T14:29:55.042130+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (54, 'farmer_jameenrayapettaiuzhavar_sandhai__780', 'farmer_jameenrayapettaiuzhavar_sandhai__780@example.com', 'farmer', True, '2026-10-27T14:29:55.739889+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (55, 'farmer_chengalpetuzhavar_sandhai__628', 'farmer_chengalpetuzhavar_sandhai__628@example.com', 'farmer', True, '2026-10-27T14:29:56.451431+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (56, 'farmer_hosuruzhavar_sandhai__897', 'farmer_hosuruzhavar_sandhai__897@example.com', 'farmer', True, '2026-10-27T14:29:57.147559+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (57, 'farmer_ariyaluruzhavar_sandhai_750', 'farmer_ariyaluruzhavar_sandhai_750@example.com', 'farmer', True, '2026-10-27T14:29:57.852507+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (58, 'farmer_guduvancheriuzhavar_sandhai__493', 'farmer_guduvancheriuzhavar_sandhai__493@example.com', 'farmer', True, '2026-10-27T14:29:58.552781+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (59, 'farmer_uthukottai_apmc_273', 'farmer_uthukottai_apmc_273@example.com', 'farmer', True, '2026-10-27T14:29:59.262390+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (60, 'farmer_jeyankondam_uzhavar_sandhai__616', 'farmer_jeyankondam_uzhavar_sandhai__616@example.com', 'farmer', True, '2026-10-27T14:29:59.963748+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (61, 'farmer_jeyankondam_uzhavar_sandhai__619', 'farmer_jeyankondam_uzhavar_sandhai__619@example.com', 'farmer', True, '2026-10-27T14:30:00.669523+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (62, 'farmer_athuruzhavar_sandhai__330', 'farmer_athuruzhavar_sandhai__330@example.com', 'farmer', True, '2026-10-27T14:30:01.374859+00:00');
-INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (63, 'farmer_kumbakonam_uzhavar_sandhai__630', 'farmer_kumbakonam_uzhavar_sandhai__630@example.com', 'farmer', True, '2026-10-27T14:30:02.077686+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (3, 'test_farmer', 'farmer@test.com', 'farmer', 1, '2026-09-13T10:49:52.274405+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (4, 'test_customer', 'customer@test.com', 'customer', 1, '2026-09-13T10:49:52.941170+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (51, 'farmer_ariyaluruzhavar_sandhai_280', 'farmer_ariyaluruzhavar_sandhai_280@example.com', 'farmer', 1, '2026-10-27T14:29:53.573456+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (52, 'farmer_ariyaluruzhavar_sandhai_559', 'farmer_ariyaluruzhavar_sandhai_559@example.com', 'farmer', 1, '2026-10-27T14:29:54.313310+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (53, 'farmer_ariyaluruzhavar_sandhai_253', 'farmer_ariyaluruzhavar_sandhai_253@example.com', 'farmer', 1, '2026-10-27T14:29:55.042130+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (54, 'farmer_jameenrayapettaiuzhavar_sandhai__780', 'farmer_jameenrayapettaiuzhavar_sandhai__780@example.com', 'farmer', 1, '2026-10-27T14:29:55.739889+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (55, 'farmer_chengalpetuzhavar_sandhai__628', 'farmer_chengalpetuzhavar_sandhai__628@example.com', 'farmer', 1, '2026-10-27T14:29:56.451431+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (56, 'farmer_hosuruzhavar_sandhai__897', 'farmer_hosuruzhavar_sandhai__897@example.com', 'farmer', 1, '2026-10-27T14:29:57.147559+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (57, 'farmer_ariyaluruzhavar_sandhai_750', 'farmer_ariyaluruzhavar_sandhai_750@example.com', 'farmer', 1, '2026-10-27T14:29:57.852507+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (58, 'farmer_guduvancheriuzhavar_sandhai__493', 'farmer_guduvancheriuzhavar_sandhai__493@example.com', 'farmer', 1, '2026-10-27T14:29:58.552781+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (59, 'farmer_uthukottai_apmc_273', 'farmer_uthukottai_apmc_273@example.com', 'farmer', 1, '2026-10-27T14:29:59.262390+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (60, 'farmer_jeyankondam_uzhavar_sandhai__616', 'farmer_jeyankondam_uzhavar_sandhai__616@example.com', 'farmer', 1, '2026-10-27T14:29:59.963748+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (61, 'farmer_jeyankondam_uzhavar_sandhai__619', 'farmer_jeyankondam_uzhavar_sandhai__619@example.com', 'farmer', 1, '2026-10-27T14:30:00.669523+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (62, 'farmer_athuruzhavar_sandhai__330', 'farmer_athuruzhavar_sandhai__330@example.com', 'farmer', 1, '2026-10-27T14:30:01.374859+00:00');
+INSERT INTO `backend_user` (`id`, `username`, `email`, `role`, `is_active`, `date_joined`) VALUES (63, 'farmer_kumbakonam_uzhavar_sandhai__630', 'farmer_kumbakonam_uzhavar_sandhai__630@example.com', 'farmer', 1, '2026-10-27T14:30:02.077686+00:00');
 
 -- -----------------------------------------------------------------
 -- Table structure for `backend_farmerprofile`
@@ -124,19 +124,19 @@ CREATE TABLE `backend_listing` (
 );
 
 -- Dumping data for `backend_listing` (13 records)
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (60, 60, 57.00, NULL, NULL, True, '2026-10-27T14:29:54.285059+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (61, 61, 57.00, NULL, NULL, True, '2026-10-27T14:29:55.023371+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (62, 62, 46.00, NULL, NULL, True, '2026-10-27T14:29:55.721354+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (63, 63, 275.00, NULL, NULL, True, '2026-10-27T14:29:56.432729+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (64, 64, 105.00, NULL, NULL, True, '2026-10-27T14:29:57.128052+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (65, 65, 1300.00, NULL, NULL, True, '2026-10-27T14:29:57.834222+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (66, 66, 27.50, NULL, NULL, True, '2026-10-27T14:29:58.531739+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (67, 67, 95.00, NULL, NULL, True, '2026-10-27T14:29:59.243946+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (68, 68, 19.00, NULL, NULL, True, '2026-10-27T14:29:59.944707+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (69, 69, 18.00, NULL, NULL, True, '2026-10-27T14:30:00.650557+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (70, 70, 78.00, NULL, NULL, True, '2026-10-27T14:30:01.356212+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (71, 71, 20.00, NULL, NULL, True, '2026-10-27T14:30:02.059717+00:00');
-INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (72, 72, 120.00, NULL, NULL, True, '2026-10-27T14:30:02.756807+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (60, 60, 57.00, NULL, NULL, 1, '2026-10-27T14:29:54.285059+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (61, 61, 57.00, NULL, NULL, 1, '2026-10-27T14:29:55.023371+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (62, 62, 46.00, NULL, NULL, 1, '2026-10-27T14:29:55.721354+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (63, 63, 275.00, NULL, NULL, 1, '2026-10-27T14:29:56.432729+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (64, 64, 105.00, NULL, NULL, 1, '2026-10-27T14:29:57.128052+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (65, 65, 1300.00, NULL, NULL, 1, '2026-10-27T14:29:57.834222+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (66, 66, 27.50, NULL, NULL, 1, '2026-10-27T14:29:58.531739+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (67, 67, 95.00, NULL, NULL, 1, '2026-10-27T14:29:59.243946+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (68, 68, 19.00, NULL, NULL, 1, '2026-10-27T14:29:59.944707+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (69, 69, 18.00, NULL, NULL, 1, '2026-10-27T14:30:00.650557+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (70, 70, 78.00, NULL, NULL, 1, '2026-10-27T14:30:01.356212+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (71, 71, 20.00, NULL, NULL, 1, '2026-10-27T14:30:02.059717+00:00');
+INSERT INTO `backend_listing` (`id`, `product_id`, `selling_price_per_kg`, `ai_predicted_price`, `reference_market_price`, `is_active`, `created_at`) VALUES (72, 72, 120.00, NULL, NULL, 1, '2026-10-27T14:30:02.756807+00:00');
 
 -- -----------------------------------------------------------------
 -- Table structure for `backend_inventory`
@@ -249,8 +249,8 @@ CREATE TABLE `backend_payment` (
 );
 
 -- Dumping data for `backend_payment` (2 records)
-INSERT INTO `backend_payment` (`id`, `order_id`, `transaction_id`, `amount`, `status`, `provider`, `payment_timestamp`, `verification_status`) VALUES (1, 1, NULL, 114.00, 'SUCCESS', 'TEST_MODE', '2026-09-13T15:25:57.835213+00:00', True);
-INSERT INTO `backend_payment` (`id`, `order_id`, `transaction_id`, `amount`, `status`, `provider`, `payment_timestamp`, `verification_status`) VALUES (2, 2, NULL, 755.00, 'SUCCESS', 'TEST_MODE', '2026-09-15T08:10:01.160001+00:00', True);
+INSERT INTO `backend_payment` (`id`, `order_id`, `transaction_id`, `amount`, `status`, `provider`, `payment_timestamp`, `verification_status`) VALUES (1, 1, NULL, 114.00, 'SUCCESS', 'TEST_MODE', '2026-09-13T15:25:57.835213+00:00', 1);
+INSERT INTO `backend_payment` (`id`, `order_id`, `transaction_id`, `amount`, `status`, `provider`, `payment_timestamp`, `verification_status`) VALUES (2, 2, NULL, 755.00, 'SUCCESS', 'TEST_MODE', '2026-09-15T08:10:01.160001+00:00', 1);
 
 -- -----------------------------------------------------------------
 -- Table structure for `backend_researchevent`

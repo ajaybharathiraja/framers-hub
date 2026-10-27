@@ -136,3 +136,13 @@ MAILERS = {
 AUTH_USER_MODEL = 'backend.User'
 
 LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
+
+# Use signed cookies so sessions remain authenticated across multiple Vercel serverless containers
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_NAME = 'uzhavarhub_session'
+SESSION_COOKIE_AGE = 86400 * 7  # 7 days
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'

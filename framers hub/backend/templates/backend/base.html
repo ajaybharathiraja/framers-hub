@@ -12,7 +12,7 @@
     <div class="app-layout">
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
-            <a href="{% url 'home' %}" class="nav-brand" style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.6rem; letter-spacing: -0.5px; text-decoration: none;">
+            <a href="{% if user.role == 'farmer' %}{% url 'farmer_dashboard' %}{% elif user.role == 'customer' %}{% url 'customer_dashboard' %}{% else %}{% url 'home' %}{% endif %}" class="nav-brand" style="display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.6rem; letter-spacing: -0.5px; text-decoration: none;">
                 <img src="{% static 'img/logo.png' %}" alt="Uzhavar Hub Logo" style="width: 36px; height: 36px; border-radius: 8px; box-shadow: 0 4px 10px rgba(46, 160, 67, 0.3);">
                 <span class="nav-brand-text">Uzhavar<span style="color: var(--primary); font-weight: 600;">Hub</span></span>
             </a>

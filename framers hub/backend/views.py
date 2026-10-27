@@ -31,6 +31,12 @@ def register_customer(request):
     return render(request, 'backend/register_customer.html', {'form': form})
 
 def user_login(request):
+    if request.user.is_authenticated:
+        if getattr(request.user, 'role', '') == 'farmer':
+            return redirect('farmer_dashboard')
+        elif getattr(request.user, 'role', '') == 'customer':
+            return redirect('customer_dashboard')
+
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -110,7 +116,11 @@ def customer_dashboard(request):
     if request.user.role != 'customer':
         return redirect('farmer_dashboard')
         
-    customer = request.user.customer_profile
+    try:
+        customer = request.user.customer_profile
+    except Exception:
+        from .models import CustomerProfile
+        customer, _ = CustomerProfile.objects.get_or_create(user=request.user)
     
     from .models import Order, Listing, CartItem
     from django.db.models import Sum
@@ -139,20 +149,6 @@ def customer_dashboard(request):
 from django.db import transaction
 from .models import Product, Listing, Inventory, ProductImage
 from .forms import ProductForm, ListingForm, InventoryForm
-
-@login_required
-def marketplace(request):
-    if request.user.role != 'customer':
-        return redirect('farmer_dashboard')
-    
-    query = request.GET.get('q', '')
-    from django.shortcuts import get_object_or_404
-    listings = Listing.objects.filter(is_active=True, inventory__available_quantity__gt=0).select_related('product', 'product__farmer')
-    
-    if query:
-        listings = listings.filter(product__commodity__icontains=query)
-        
-    return render(request, 'backend/marketplace.html', {'listings': listings})
 
 @login_required
 def farmer_add_product(request):

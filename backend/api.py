@@ -110,7 +110,13 @@ def market_intelligence_api(request):
                         logger = logging.getLogger(__name__)
                         logger.warning(f"Failed to save AI predicted price to listing {listing_id}: {e}")
                 
-                explanation = generate_pricing_explanation(PRICING_MODEL, features_dict, PRICING_METADATA)
+                if generate_pricing_explanation:
+                    try:
+                        explanation = generate_pricing_explanation(PRICING_MODEL, features_dict, PRICING_METADATA)
+                    except Exception:
+                        explanation = None
+                else:
+                    explanation = None
                 intelligence['explanation'] = explanation
             else:
                 raise ValueError("Not enough historical data to generate lag features.")

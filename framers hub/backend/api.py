@@ -21,7 +21,10 @@ def get_market_data():
     return MARKET_DATA
 
 from ai_services.dynamic_pricing.predict import load_pricing_model, predict_price
-from ai_services.dynamic_pricing.explain import generate_pricing_explanation
+try:
+    from ai_services.dynamic_pricing.explain import generate_pricing_explanation
+except Exception:
+    generate_pricing_explanation = None
 
 # Load model globally to avoid loading on every request
 PRICING_MODEL, PRICING_METADATA = load_pricing_model()
@@ -107,7 +110,13 @@ def market_intelligence_api(request):
                         logger = logging.getLogger(__name__)
                         logger.warning(f"Failed to save AI predicted price to listing {listing_id}: {e}")
                 
-                explanation = generate_pricing_explanation(PRICING_MODEL, features_dict, PRICING_METADATA)
+                if generate_pricing_explanation:
+                    try:
+                        explanation = generate_pricing_explanation(PRICING_MODEL, features_dict, PRICING_METADATA)
+                    except Exception:
+                        explanation = None
+                else:
+                    explanation = None
                 intelligence['explanation'] = explanation
             else:
                 raise ValueError("Not enough historical data to generate lag features.")

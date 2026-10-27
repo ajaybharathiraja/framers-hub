@@ -1,7 +1,7 @@
 {
     "model_name": "Random Forest",
     "version": "v1.0",
-    "training_timestamp": "2026-09-22T07:35:28.629063",
+    "training_timestamp": "2026-10-27T20:01:01.978592",
     "features": [
         "year",
         "month",
@@ -19,7 +19,7 @@
         "rolling_std_7"
     ],
     "metrics": {
-        "mae": 3.875673472999636,
+        "mae": 3.8756734729996354,
         "rmse": 13.698800299497313,
         "r2": 0.9629174803971559
     },

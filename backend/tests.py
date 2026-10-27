@@ -2,7 +2,9 @@ from django.test import TestCase, Client
 from django.urls import reverse
 import json
 from .models import ResearchEvent, FarmerProfile
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class APITests(TestCase):
     def setUp(self):
@@ -34,21 +36,25 @@ class APITests(TestCase):
 
 class ResearchEventTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='test_farmer', password='password')
+        self.user = User.objects.create_user(
+            username='test_farmer', 
+            email='test_farmer@example.com', 
+            password='password',
+            role='farmer'
+        )
         self.farmer = FarmerProfile.objects.create(
             user=self.user, 
             location='Test Village', 
-            farm_size=2.5, 
-            primary_crops='Tomato'
+            state='Tamil Nadu',
+            district='Ariyalur'
         )
 
     def test_research_event_logging(self):
         event = ResearchEvent.objects.create(
             user=self.user,
-            event_type='API_CALL',
-            event_data={'endpoint': 'crop-recommendation', 'result': 'rice'},
-            path='/api/crop-recommendation/'
+            event_type='CROP_RECOMMENDATION_REQUESTED',
+            metadata={'endpoint': 'crop-recommendation', 'result': 'rice'}
         )
         self.assertEqual(ResearchEvent.objects.count(), 1)
-        self.assertEqual(event.event_type, 'API_CALL')
-        self.assertEqual(event.event_data['result'], 'rice')
+        self.assertEqual(event.event_type, 'CROP_RECOMMENDATION_REQUESTED')
+        self.assertEqual(event.metadata['result'], 'rice')

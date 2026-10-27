@@ -45,12 +45,6 @@ class Product(models.Model):
     variety = models.CharField(max_length=100, blank=True)
     grade = models.CharField(max_length=50, blank=True)
 
-
-class Product(models.Model):
-    farmer = models.ForeignKey(FarmerProfile, on_delete=models.CASCADE, related_name='products')
-    commodity = models.CharField(max_length=100)
-    variety = models.CharField(max_length=100, blank=True)
-    grade = models.CharField(max_length=50, blank=True)
     description = models.TextField(blank=True)
     location = models.CharField(max_length=255)
     harvest_date = models.DateField(null=True, blank=True)

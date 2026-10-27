@@ -1,7 +1,7 @@
 {
     "model_name": "crop_rf",
     "version": "v1.0",
-    "training_timestamp": "2026-09-28T15:58:18.735119",
+    "training_timestamp": "2026-10-27T20:00:25.052390",
     "features": [
         "N",
         "P",
